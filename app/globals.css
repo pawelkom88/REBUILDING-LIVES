@@ -99,3 +99,17 @@ input[type="range"]:focus::-ms-fill-upper {
 *:focus-visible {
   outline: 3px dashed #f43f5e;
 }
+
+.fade-in-on-mount {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
