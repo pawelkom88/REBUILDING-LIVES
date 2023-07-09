@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-clr: #e2283a;
+  --secondary-clr: #f3292b;
+}
+
 input[type="range"] {
   height: 34px;
   -webkit-appearance: none;
@@ -14,7 +19,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 11px;
   cursor: pointer;
-  background: #f43f5e;
+  background: var(--primary-clr);
   border-radius: 1px;
 }
 
@@ -31,7 +36,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #f43f5e;
+  background: var(--primary-clr);
 }
 
 input[type="range"]::-moz-range-track {
@@ -39,7 +44,7 @@ input[type="range"]::-moz-range-track {
   height: 11px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000;
-  background: #f43f5e;
+  background: var(--primary-clr);
   border-radius: 1px;
   border: 0px solid #010101;
 }
@@ -64,14 +69,14 @@ input[type="range"]::-ms-track {
 }
 
 input[type="range"]::-ms-fill-lower {
-  background: #f43f5e;
+  background: var(--primary-clr);
   border: 0px solid #010101;
   border-radius: 2px;
   box-shadow: 1px 1px 1px #000000;
 }
 
 input[type="range"]::-ms-fill-upper {
-  background: #f43f5e;
+  background: var(--primary-clr);
   border: 0px solid #010101;
   border-radius: 2px;
   box-shadow: 1px 1px 1px #000000;
@@ -89,19 +94,19 @@ input[type="range"]::-ms-thumb {
 }
 
 input[type="range"]:focus::-ms-fill-lower {
-  background: #f43f5e;
+  background: var(--primary-clr);
 }
 
 input[type="range"]:focus::-ms-fill-upper {
-  background: #f43f5e;
+  background: var(--primary-clr);
 }
 
 *:focus-visible {
-  outline: 3px dashed #f43f5e;
+  outline: 3px dashed var(--primary-clr);
 }
 
 .fade-in-on-mount {
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
@@ -112,4 +117,29 @@ input[type="range"]:focus::-ms-fill-upper {
   100% {
     opacity: 1;
   }
+}
+
+.dropdown {
+  box-shadow: var(--primary-clr) 2px 2px 2px;
+  will-change: transform;
+  position: absolute;
+  z-index: 100;
+  top: 3rem;
+  right: -2rem;
+  visibility: hidden;
+  opacity: 0;
+  width: 15rem;
+  height: 8rem;
+  padding: 0.8rem 1rem;
+  transition: transform 0.2s, opacity 0.2s, visibility 0s linear 0.2s;
+  background: #fff;
+  border: 1px solid var(--primary-clr);
+  border-radius: 0.25rem;
+}
+
+.dropdown.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-0.3rem);
+  transition: transform 0.2s, opacity 0.2s, visibility linear;
 }
