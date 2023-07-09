@@ -57,19 +57,18 @@ export default function Navigation() {
             {navLinks.map(({ id, name, path, hasDropDown, hasIcon }) => {
               return (
                 <Fragment key={id}>
-                  <Link legacyBehavior href={path}>
-                    <a
-                      onMouseDown={() => setSelectedLinkId(id)}
-                      {...(hasDropDown && buttonProps)}
-                      className="hover:text-primary-clr relative flex items-center justify-between text-md  md:px-7">
-                      {name}
+                  <Link
+                    href={path}
+                    onMouseDown={() => setSelectedLinkId(id)}
+                    {...(hasDropDown && buttonProps)}
+                    className="hover:text-primary-clr relative flex items-center justify-between text-md  md:px-7">
+                    {name}
 
-                      {hasIcon && <DropdownIcon iconType={isOpen && id === selectedLinkId} />}
+                    {hasIcon && <DropdownIcon iconType={isOpen && id === selectedLinkId} />}
 
-                      {id === selectedLinkId && (
-                        <Dropdown id={id} isOpen={isOpen} itemProps={itemProps} />
-                      )}
-                    </a>
+                    {id === selectedLinkId && (
+                      <Dropdown id={id} isOpen={isOpen} itemProps={itemProps} />
+                    )}
                   </Link>
                 </Fragment>
               );
