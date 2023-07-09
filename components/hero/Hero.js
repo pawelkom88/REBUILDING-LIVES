@@ -8,7 +8,7 @@ export default function Hero() {
 
   return (
     <section className="relative lg:h-[calc(100vh-80px)]">
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      <div className="absolute inset-0 bg-black/70 z-10"></div>
       {isPlaying ? (
         <video
           onEnded={() => setIsPlaying(false)}
@@ -36,26 +36,26 @@ export default function Hero() {
 
       <div className="relative h-full z-20 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:items-center lg:justify-between lg:px-8 ">
         <div className="max-w-xl">
-          <h1 className="text-3xl font-extrabold sm:text-5xl text-rose-500">
+          <h1 className="text-3xl font-extrabold sm:text-5xl text-primary-clr">
             Rebuilding Lives UK
-            <strong className="block text-white mt-2">
+            {/* <strong className="block text-white mt-2">
               Supporting Survivors of Domestic Abuse
-            </strong>
+            </strong> */}
           </h1>
           <p className="mt-4 max-w-lg sm:text-xl/relaxed text-white">
             Rebuilding Lives UK empowers survivors of domestic abuse on the road to recovery by
-            helping them with emotional support, home maintenance, security and repair
+            providing practical support including home maintainence, security and repair.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 text-center">
             <a
               href="#"
-              className="block w-full rounded bg-rose-500 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-dashed focus:ring focus:ring-white active:bg-rose-500 sm:w-auto">
+              className="block w-full rounded bg-primary-clr px-12 py-3 text-sm font-medium text-white shadow hover:bg-white hover:text-primary-clr focus:outline-dashed focus:ring focus:ring-white active:bg-primary-clr sm:w-auto">
               Get Started
             </a>
 
             <a
               href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-dashed focus:ring focus:ring-white active:text-rose-500 sm:w-auto">
+              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-primary-clr shadow hover:bg-primary-clr hover:text-white focus:outline-dashed focus:ring focus:ring-white active:text-primary-clr sm:w-auto">
               Join the team
             </a>
           </div>
