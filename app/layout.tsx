@@ -1,5 +1,6 @@
+import Footer from "@/components/footer/Footer";
 import "./globals.css";
-import Navigation from "@/components/navigation/Navigation";
+import Navigation1 from "@/components/navigation/Navigation1";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,8 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${inter.className} relative`}>
-        <Navigation />
+        <Navigation1 />
         {children}
+        <Footer />
       </body>
     </html>
   );

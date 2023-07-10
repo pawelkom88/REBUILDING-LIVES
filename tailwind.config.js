@@ -14,7 +14,8 @@ module.exports = {
       },
       colors: {
         "primary-clr": "var(--primary-clr)",
-        "secondary-clr": "var(--secondary-clr)"
+        "secondary-clr": "var(--secondary-clr)",
+        "disabled-clr": "var(--disabled-clr)",
       },
     },
   },

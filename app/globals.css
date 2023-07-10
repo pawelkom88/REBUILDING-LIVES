@@ -5,6 +5,7 @@
 :root {
   --primary-clr: #e2283a;
   --secondary-clr: #f3292b;
+  --disabled-clr: #c6c6c6;
 }
 
 input[type="range"] {
@@ -109,6 +110,10 @@ input[type="range"]:focus::-ms-fill-upper {
   animation: fadeIn 0.5s ease-in;
 }
 
+.fade-out-on-mount {
+  animation: fadeOut 0.5s ease-in;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -119,27 +124,12 @@ input[type="range"]:focus::-ms-fill-upper {
   }
 }
 
-.dropdown {
-  box-shadow: var(--primary-clr) 2px 2px 2px;
-  will-change: transform;
-  position: absolute;
-  z-index: 100;
-  top: 3rem;
-  right: -2rem;
-  visibility: hidden;
-  opacity: 0;
-  width: 15rem;
-  height: 8rem;
-  padding: 0.8rem 1rem;
-  transition: transform 0.2s, opacity 0.2s, visibility 0s linear 0.2s;
-  background: #fff;
-  border: 1px solid var(--primary-clr);
-  border-radius: 0.25rem;
-}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
 
-.dropdown.visible {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(-0.3rem);
-  transition: transform 0.2s, opacity 0.2s, visibility linear;
+  100% {
+    opacity: 0;
+  }
 }

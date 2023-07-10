@@ -14,7 +14,7 @@ const dropDownLinksOurTeam = [
 
 let links;
 
-export default function Dropdown({ id, isOpen, itemProps }) {
+export default function Dropdown({ id }) {
   if (id === 1) {
     links = dropDownLinksAboutUs;
   } else {
@@ -23,16 +23,13 @@ export default function Dropdown({ id, isOpen, itemProps }) {
 
   return (
     <div
-      className={`flex flex-col gap-4 justify-center items-start ${
-        isOpen ? "dropdown visible" : "dropdown"
-      }`}
+      className="visible absolute top-24 z-30 bg-white flex flex-col gap-4 justify-center items-start p-4 rounded-md shadow-md shadow-primary-clr"
       role="menu">
       {links.map(({ id, name, icon, path }) => {
         return (
           <Link
-            className="flex justify-between items-center gap-4 hover:text-gray-900 font-bold"
+            className="flex justify-between items-center gap-4 hover:text-primary-clr font-bold"
             key={id}
-            {...itemProps[id]}
             href={path}>
             <Image src={icon} width={30} height={30} alt="link icon" />
             {name}

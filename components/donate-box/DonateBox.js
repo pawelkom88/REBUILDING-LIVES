@@ -1,16 +1,61 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DonateTile from "./DonateTile";
-import { donateBoxValues, donationData } from "./donationData";
+import {
+  donateBoxValues,
+  donationData,
+  defaultSpendingInfo,
+  modalMessages,
+  timeoutCounter,
+  minimumDonationAmount,
+  maximumDonationAmount,
+} from "./donationData";
+import Modal from "../modal/Modal";
+import Overlay from "../modal/overlay/Overlay";
 
 export default function DonateBox() {
   const [donation, setDonation] = useState({
     value: null,
     isActive: false,
   });
+  const router = useRouter();
   const [otherDonationValue, setOtherDonationValue] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [showModal, setShowModal] = useState({ isVisible: false, status: "", message: "" });
+  const [counter, setCounter] = useState(timeoutCounter);
+
+  useEffect(() => {
+    if (donation.value !== null || otherDonationValue !== "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [donation.value, otherDonationValue]);
+
+  useEffect(() => {
+    if (counter === 0) return;
+
+    const timer = setInterval(() => {
+      if (showModal.status === "success") {
+        setCounter(prevCount => prevCount - 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [counter, showModal.status]);
+
+  useEffect(() => {
+    if (counter === 0) handleRedirectToStripe();
+  }, [counter]);
+
+  const handleRedirectToStripe = () => {
+    // env var
+    router.push("https://www.bbc.co.uk/");
+    resetState();
+  };
 
   const handleOtherDonationInputFocus = event => {
     const key = event.key;
@@ -26,17 +71,20 @@ export default function DonateBox() {
   };
 
   const validateMinimumDonation = () => {
-    return !donation.value && otherDonationValue < 10;
+    return !donation.value && otherDonationValue < minimumDonationAmount;
   };
 
-  const showErrorModal = message => {
-    // Add code to show error modal with the provided message
-    alert(message);
+  const validateMaximumDonation = () => {
+    return !donation.value && otherDonationValue > maximumDonationAmount;
   };
 
   const processDonation = () => {
     // stripe logic
-    console.log("donation sent");
+    setShowModal({
+      isVisible: true,
+      status: "success",
+      message: modalMessages.success,
+    });
   };
 
   const resetState = () => {
@@ -44,39 +92,49 @@ export default function DonateBox() {
     setDonation({ value: null, isActive: false });
   };
 
+  const showModalError = message => {
+    setShowModal({
+      isVisible: true,
+      status: "error",
+      message,
+    });
+  };
+
   const handleDonationSubmit = event => {
     event.preventDefault();
 
-    if (validateDonation()) {
-      showErrorModal("Please enter a valid number");
-      return;
+    switch (true) {
+      case validateDonation():
+        showModalError(modalMessages.invalidAmount);
+        return;
+
+      case validateMinimumDonation():
+        showModalError(modalMessages.minimumDonation);
+        return;
+
+      case validateMaximumDonation():
+        showModalError(modalMessages.maximumDonation);
+        return;
+
+      default:
+        processDonation();
     }
-
-    if (validateMinimumDonation()) {
-      showErrorModal("Minimum donation is £10");
-      return;
-    }
-
-    processDonation();
-
-    resetState();
   };
 
-  const { spending, icon } = donationData[donation.value] || {
-    spending: "' No one has ever become poor by giving. ' - Anne Frank",
-    icon: "/icons/quote.svg",
-  };
+  const { amountToSpend, icon } = donationData[donation.value] || defaultSpendingInfo;
 
   return (
     <div className="w-full h-full px-4 flex flex-col justify-center mx-auto rounded bg-white">
       <div className="flex items-center justify-center font-black m-3 mb-4">
-        <h2 className="tracking-wide text-2xl text-gray-900">Add some text</h2>
+        <h2 className="tracking-wide text-2xl text-gray-900">Your donation would help</h2>
       </div>
       <div className="flex justify-center items-center mb-4">
+        {/* // create reusable button that takes props - take it frm other project         */}
         <button className="hover:text-white w-32 h-12 border-2 border-primary-clr flex justify-center items-center uppercase font-bold cursor-pointer border-r-0 bg-primary-clr text-white hover:bg-secondary-clr">
           Single
         </button>
-        <button className="hover:text-white w-32 h-12 border-2 border-gray-800 flex justify-center items-center uppercase font-bold cursor-not-allowed hover:bg-gray-800">
+
+        <button className="hover:text-white w-32 h-12 border-2 border-disabled-clr flex justify-center items-center uppercase font-bold cursor-not-allowed hover:bg-disabled-clr">
           Monthly
         </button>
       </div>
@@ -97,7 +155,7 @@ export default function DonateBox() {
 
         <div className="w-full h-24 text-lg font-bold my-4 p-2 flex gap-4 justify-between items-center text-center">
           <Image src={icon} alt={icon} width={50} height={50} />
-          {spending}
+          {amountToSpend}
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
           <label className="sr-only" htmlFor="other-amount">
@@ -119,12 +177,24 @@ export default function DonateBox() {
         </div>
 
         <button
-          // disabled={!!donationValue.value}
-          className="block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-gray-200 mb-4"
+          disabled={isDisabled}
+          className="block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-disabled-clr mb-4 disabled:cursor-not-allowed disabled:border-disabled-clr disabled:text-white"
           type="submit">
           Donate
         </button>
       </form>
+      <Overlay showModal={showModal.isVisible} onRequestClose={setShowModal}>
+        <Modal
+          key={showModal.message}
+          showModal={showModal.isVisible}
+          onRequestClose={setShowModal}
+          status={showModal.status}
+          setCounter={setCounter}
+          countdown={counter}>
+          {/* Thanks for donating, you will be redirect to payment page in ...(env var) */}
+          {showModal.message}
+        </Modal>
+      </Overlay>
     </div>
   );
 }
