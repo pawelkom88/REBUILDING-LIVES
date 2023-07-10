@@ -58,13 +58,22 @@ export default function Navigation() {
 
               return (
                 <Fragment key={id}>
-                  <Link
-                    onClick={() => setSelectedLinkId(id)}
-                    href={path}
-                    className="hover:text-primary-clr relative flex items-center justify-between text-md  md:px-7">
-                    {name}
-                    {/* {hasIcon && <DropdownIcon iconType={id === selectedLinkId} />} */}
-                  </Link>
+                  {hasDropDown ? (
+                    <button
+                      onClick={() => setSelectedLinkId(id)}
+                      className="hover:text-primary-clr relative flex items-center justify-between text-md  md:px-7">
+                      {name}
+                      {hasIcon && <DropdownIcon iconType={id === selectedLinkId} />}
+                    </button>
+                  ) : (
+                    <Link
+                      onClick={() => setSelectedLinkId(id)}
+                      href={path}
+                      className="hover:text-primary-clr relative flex items-center justify-between text-md  md:px-7">
+                      {name}
+                      {hasIcon && <DropdownIcon iconType={id === selectedLinkId} />}
+                    </Link>
+                  )}
                   {isDropdownOpen && <Dropdown id={id} />}
                 </Fragment>
               );

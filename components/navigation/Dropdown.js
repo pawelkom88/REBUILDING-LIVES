@@ -31,7 +31,7 @@ export default function Dropdown({ id }) {
             className="flex justify-between items-center gap-4 hover:text-primary-clr font-bold"
             key={id}
             href={path}>
-            {/* <Image src={icon} width={30} height={30} alt="link icon" /> */}
+            <Image src={icon} width={30} height={30} alt="link icon" />
             {name}
           </Link>
         );
