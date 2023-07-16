@@ -15,6 +15,10 @@ import {
 } from "./donationData";
 import Modal from "../modal/Modal";
 import Overlay from "../modal/overlay/Overlay";
+import getStripe from "./DonateBox";
+import { fetchPostJSON } from "@/app/api/helpers";
+
+// const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function DonateBox() {
   const [donation, setDonation] = useState({
@@ -26,6 +30,8 @@ export default function DonateBox() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [showModal, setShowModal] = useState({ isVisible: false, status: "", message: "" });
   const [counter, setCounter] = useState(timeoutCounter);
+
+  console.log(donation, otherDonationValue);
 
   useEffect(() => {
     if (donation.value !== null || otherDonationValue !== "") {
@@ -47,15 +53,15 @@ export default function DonateBox() {
     return () => clearInterval(timer);
   }, [counter, showModal.status]);
 
-  useEffect(() => {
-    if (counter === 0) handleRedirectToStripe();
-  }, [counter]);
+  // useEffect(() => {
+  //   if (counter === 0) handleRedirectToStripe();
+  // }, [counter]);
 
-  const handleRedirectToStripe = () => {
-    // env var
-    router.push("https://www.bbc.co.uk/");
-    resetState();
-  };
+  // const handleRedirectToStripe = () => {
+  //   // env var
+  //   // router.push("https://www.bbc.co.uk/");
+  //   resetState();
+  // };
 
   const handleOtherDonationInputFocus = event => {
     const key = event.key;
@@ -78,13 +84,36 @@ export default function DonateBox() {
     return !donation.value && otherDonationValue > maximumDonationAmount;
   };
 
-  const processDonation = () => {
-    // stripe logic
-    setShowModal({
-      isVisible: true,
-      status: "success",
-      message: modalMessages.success,
+  const processDonation = async donation => {
+    const checkoutSession = await fetchPostJSON(
+      "/api/checkout_sessions",
+      //storing the amount in the session or number ??
+      { amount: donation }
+    );
+
+    if (checkoutSession.statusCode === 500) {
+      console.error(checkoutSession.message);
+
+      return;
+    }
+
+    // Redirect to Checkout.
+    //was await !!!
+    const stripe = getStripe();
+
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.id,
     });
+
+    console.warn(error.message);
+
+    resetState();
+
+    // setShowModal({
+    //   isVisible: true,
+    //   status: "success",
+    //   message: modalMessages.success,
+    // });
   };
 
   const resetState = () => {
@@ -117,7 +146,7 @@ export default function DonateBox() {
         return;
 
       default:
-        processDonation();
+        processDonation(donation.value || otherDonationValue);
     }
   };
 
@@ -138,6 +167,7 @@ export default function DonateBox() {
           Monthly
         </button>
       </div>
+
       <form onSubmit={handleDonationSubmit}>
         <div className="grid grid-cols-3 gap-2">
           {donateBoxValues.map(tile => {
@@ -183,6 +213,9 @@ export default function DonateBox() {
           Donate
         </button>
       </form>
+
+
+      
       <Overlay showModal={showModal.isVisible} onRequestClose={setShowModal}>
         <Modal
           key={showModal.message}
@@ -197,38 +230,4 @@ export default function DonateBox() {
       </Overlay>
     </div>
   );
-}
-
-{
-  /* <form>
-        <fieldset className="space-y-2 my-2">
-          <legend className="font-medium text-gray-900 mb-4">
-            <p>
-              <Image className="inline" src={icon} alt="man icon" width={50} height={50} /> £
-              {donationValue} {donationSpending}
-            </p>
-          </legend>
-          
-          <div aria-hidden="true" className="flex justify-between px-1">
-            {DonateBoxValues.map(({ id, value }) => (
-              <span key={id}>{value}</span>
-            ))}
-          </div>
-
-          <label className="sr-only" htmlFor="donation">
-            Choose donation amount
-          </label>
-          <input
-            id="donation"
-            onChange={e => setDonationValue(Number(e.target.value))}
-            value={donationValue}
-            type="range"
-            name="donation"
-            className="w-full"
-            step="10"
-            min="25"
-            max="350"
-          />
-        </fieldset>
-      </form> */
 }

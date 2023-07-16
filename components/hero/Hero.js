@@ -2,12 +2,30 @@
 import DonateBox from "@/components/donate-box/DonateBox";
 import Image from "next/image";
 import { useState } from "react";
+import piggyBank from "@/public/icons/piggy-bank.svg";
+import chat from "@/public/icons/chat.svg";
+import Link from "next/link";
 
 export default function Hero() {
   const [isPlaying, setIsPlaying] = useState(true);
 
   return (
-    <section className="relative lg:h-[calc(100vh-80px)]">
+    <section className="relative h-[calc(100vh-63px)] lg:h-[calc(100vh-80px)]">
+      {/* COMPONENT */}
+      <div className="lg:hidden absolute z-30 w-full h-12 bg-transparent p-2 flex gap-2">
+        <button className="h-full w-full bg-white rounded flex gap-2 items-center justify-center py-[1.3rem]">
+          <Image src={piggyBank} width={27} height={27} alt="piggy bank icon" />
+          <strong className="uppercase text-sm text-primary-clr">donate</strong>
+        </button>
+
+        <button className="h-full w-full bg-primary-clr rounded flex gap-2 items-center justify-center py-[1.3rem]">
+          <Image src={chat} width={27} height={27} alt="piggy bank icon" />
+          <strong className="uppercase text-sm text-white">contact us</strong>
+        </button>
+      </div>
+
+      {/* COMPONENT */}
+
       <div className="absolute inset-0 bg-black/70 z-10"></div>
       {isPlaying ? (
         <video
@@ -34,30 +52,27 @@ export default function Hero() {
 
       {/* components!!! */}
 
-      <div className="relative h-full z-20 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:items-center lg:justify-between lg:px-8 ">
+      <div className="relative h-full z-20 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 flex items-center justify-between lg:px-8">
         <div className="max-w-xl">
           <h1 className="text-3xl font-extrabold sm:text-5xl text-primary-clr">
             Rebuilding Lives UK
-            {/* <strong className="block text-white mt-2">
-              Supporting Survivors of Domestic Abuse
-            </strong> */}
           </h1>
           <p className="mt-4 max-w-lg sm:text-xl/relaxed text-white">
             Rebuilding Lives UK empowers survivors of domestic abuse on the road to recovery by
             providing practical support including home maintainence, security and repair.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 text-center">
-            <a
+            <Link
               href="#"
               className="block w-full rounded bg-primary-clr px-12 py-3 text-sm font-medium text-white shadow hover:bg-white hover:text-primary-clr focus:outline-dashed focus:ring focus:ring-white active:bg-primary-clr sm:w-auto">
               Get Started
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="#"
               className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-primary-clr shadow hover:bg-primary-clr hover:text-white focus:outline-dashed focus:ring focus:ring-white active:text-primary-clr sm:w-auto">
               Join the team
-            </a>
+            </Link>
           </div>
         </div>
         <div className="h-[600px] w-[450px] hidden xl:flex justify-center items-center">

@@ -1,4 +1,3 @@
-import Footer from "@/components/footer/Footer";
 import Hero from "@/components/hero/Hero";
 import News from "@/components/news/News";
 import Section from "@/components/section/Section";
@@ -13,7 +12,6 @@ export default function Home() {
       <Section1 />
       <Testimonials />
       <News />
-      <Footer />
     </>
   );
 }
