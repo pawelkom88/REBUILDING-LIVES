@@ -8,22 +8,25 @@ import Link from "next/link";
 
 export default function Hero() {
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showDonationBox, setShowDonationBox] = useState(false);
 
   return (
     <section className="relative h-[calc(100vh-63px)] lg:h-[calc(100vh-80px)]">
-      {/* COMPONENT */}
-      <div className="lg:hidden absolute z-30 w-full h-12 bg-transparent p-2 flex gap-2">
-        <button className="h-full w-full bg-white rounded flex gap-2 items-center justify-center py-[1.3rem]">
-          <Image src={piggyBank} width={27} height={27} alt="piggy bank icon" />
-          <strong className="uppercase text-sm text-primary-clr">donate</strong>
-        </button>
+      {!showDonationBox && (
+        <div className="lg:hidden absolute z-30 w-full h-12 bg-transparent p-2 flex gap-2">
+          <button
+            onClick={() => setShowDonationBox(true)}
+            className="h-full w-full bg-white rounded flex gap-2 items-center justify-center py-[1.3rem]">
+            <Image src={piggyBank} width={27} height={27} alt="piggy bank icon" />
+            <strong className="uppercase text-sm text-primary-clr">donate</strong>
+          </button>
 
-        <button className="h-full w-full bg-primary-clr rounded flex gap-2 items-center justify-center py-[1.3rem]">
-          <Image src={chat} width={27} height={27} alt="piggy bank icon" />
-          <strong className="uppercase text-sm text-white">contact us</strong>
-        </button>
-      </div>
-
+          <button className="h-full w-full bg-primary-clr rounded flex gap-2 items-center justify-center py-[1.3rem]">
+            <Image src={chat} width={27} height={27} alt="piggy bank icon" />
+            <strong className="uppercase text-sm text-white">contact us</strong>
+          </button>
+        </div>
+      )}
       {/* COMPONENT */}
 
       <div className="absolute inset-0 bg-black/70 z-10"></div>
@@ -75,6 +78,13 @@ export default function Hero() {
             </Link>
           </div>
         </div>
+        {showDonationBox && (
+          <DonateBox
+            showClosebtn={showDonationBox}
+            onCloseDonationBox={setShowDonationBox}
+            styles={"fixed inset-0 z-40"}
+          />
+        )}
         <div className="h-[600px] w-[450px] hidden xl:flex justify-center items-center">
           <DonateBox />
         </div>

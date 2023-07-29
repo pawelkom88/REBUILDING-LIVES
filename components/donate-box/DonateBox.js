@@ -17,10 +17,11 @@ import Modal from "../modal/Modal";
 import Overlay from "../modal/overlay/Overlay";
 import getStripe from "./DonateBox";
 import { fetchPostJSON } from "@/app/api/helpers";
+import closeBtn from "@/public/icons/close.svg";
 
 // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function DonateBox() {
+export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBox }) {
   const [donation, setDonation] = useState({
     value: null,
     isActive: false,
@@ -85,27 +86,27 @@ export default function DonateBox() {
   };
 
   const processDonation = async donation => {
-    const checkoutSession = await fetchPostJSON(
-      "/api/checkout_sessions",
-      //storing the amount in the session or number ??
-      { amount: donation }
-    );
+    // const checkoutSession = await fetchPostJSON(
+    //   "/api/checkout_sessions",
+    //   //storing the amount in the session or number ??
+    //   { amount: donation }
+    // );
 
-    if (checkoutSession.statusCode === 500) {
-      console.error(checkoutSession.message);
+    // if (checkoutSession.statusCode === 500) {
+    //   console.error(checkoutSession.message);
 
-      return;
-    }
+    //   return;
+    // }
 
     // Redirect to Checkout.
     //was await !!!
-    const stripe = getStripe();
+    // const stripe = getStripe();
 
-    const { error } = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.id,
-    });
+    // const { error } = await stripe.redirectToCheckout({
+    //   sessionId: checkoutSession.id,
+    // });
 
-    console.warn(error.message);
+    // console.warn(error.message);
 
     resetState();
 
@@ -153,10 +154,16 @@ export default function DonateBox() {
   const { amountToSpend, icon } = donationData[donation.value] || defaultSpendingInfo;
 
   return (
-    <div className="w-full h-full px-4 flex flex-col justify-center mx-auto rounded bg-white">
-      <div className="flex items-center justify-center font-black m-3 mb-4">
-        <h2 className="tracking-wide text-2xl text-gray-900">Your donation would help</h2>
-      </div>
+    <div
+      className={`${styles} w-full h-full px-4 flex flex-col justify-center mx-auto rounded bg-white`}>
+      {showClosebtn && (
+        <button onClick={() => onCloseDonationBox(false)} className="absolute top-4 right-4 ">
+          <Image src={closeBtn} width={25} height={25} alt="close button" />
+        </button>
+      )}
+      <h2 className="tracking-wide text-center text-2xl text-gray-900 font-black m-3 mb-4">
+        Your donation would help
+      </h2>
       <div className="flex justify-center items-center mb-4">
         {/* // create reusable button that takes props - take it frm other project         */}
         <button className="hover:text-white w-32 h-12 border-2 border-primary-clr flex justify-center items-center uppercase font-bold cursor-pointer border-r-0 bg-primary-clr text-white hover:bg-secondary-clr">
@@ -169,7 +176,7 @@ export default function DonateBox() {
       </div>
 
       <form onSubmit={handleDonationSubmit}>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 gap-2">
           {donateBoxValues.map(tile => {
             return (
               <DonateTile
@@ -183,7 +190,7 @@ export default function DonateBox() {
           })}
         </div>
 
-        <div className="w-full h-24 text-lg font-bold my-4 p-2 flex gap-4 justify-between items-center text-center">
+        <div className="sm:w-1/2 lg:w-full h-24 text-lg font-bold my-4 p-2 flex gap-4 justify-between items-center text-center mx-auto">
           <Image src={icon} alt={icon} width={50} height={50} />
           {amountToSpend}
         </div>
@@ -214,8 +221,6 @@ export default function DonateBox() {
         </button>
       </form>
 
-
-      
       <Overlay showModal={showModal.isVisible} onRequestClose={setShowModal}>
         <Modal
           key={showModal.message}
