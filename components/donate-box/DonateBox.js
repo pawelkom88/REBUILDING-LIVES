@@ -1,157 +1,77 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DonateTile from "./DonateTile";
-import {
-  donateBoxValues,
-  donationData,
-  defaultSpendingInfo,
-  modalMessages,
-  timeoutCounter,
-  minimumDonationAmount,
-  maximumDonationAmount,
-} from "./donationData";
+import { donationData, defaultSpendingInfo } from "./donationData";
 import Modal from "../modal/Modal";
 import Overlay from "../modal/overlay/Overlay";
-import getStripe from "./DonateBox";
-import { fetchPostJSON } from "@/app/api/helpers";
 import closeBtn from "@/public/icons/close.svg";
-
-// const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+import { calcProductPrice } from "@/helpers";
+import useFetch from "@/hooks/useFetch";
+import Spinner from "@/components/spinner/Spinner";
+import { useRouter } from "next/navigation";
 
 export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBox }) {
+  const router = useRouter();
+
   const [donation, setDonation] = useState({
     value: null,
     isActive: false,
   });
-  const router = useRouter();
-  const [otherDonationValue, setOtherDonationValue] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [showModal, setShowModal] = useState({ isVisible: false, status: "", message: "" });
-  const [counter, setCounter] = useState(timeoutCounter);
 
-  console.log(donation, otherDonationValue);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const [redirectError, setRedirectError] = useState(null);
+
+  const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
+
+  const [donationId, setDonationId] = useState("");
+
+  const { data, loading, error } = useFetch();
+
+  const { amountToSpend, icon } = donationData[donation.value] || defaultSpendingInfo;
 
   useEffect(() => {
-    if (donation.value !== null || otherDonationValue !== "") {
+    if (donation.value !== null) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [donation.value, otherDonationValue]);
+  }, [donation.value]);
 
-  useEffect(() => {
-    if (counter === 0) return;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setRedirectError(null);
 
-    const timer = setInterval(() => {
-      if (showModal.status === "success") {
-        setCounter(prevCount => prevCount - 1);
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    setIsRedirectingToStripe(true);
+
+    try {
+      const response = await fetch("/api/checkout_sessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ donationId }),
+        signal,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch checkout session");
       }
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, [counter, showModal.status]);
-
-  // useEffect(() => {
-  //   if (counter === 0) handleRedirectToStripe();
-  // }, [counter]);
-
-  // const handleRedirectToStripe = () => {
-  //   // env var
-  //   // router.push("https://www.bbc.co.uk/");
-  //   resetState();
-  // };
-
-  const handleOtherDonationInputFocus = event => {
-    const key = event.key;
-
-    if (key === "Shift" || key === "Tab") return;
-
-    setDonation({ value: null, isActive: true });
-  };
-
-  const validateDonation = () => {
-    const validationNumbers = /^[0-9]+$/;
-    return !donation.value && !otherDonationValue.match(validationNumbers);
-  };
-
-  const validateMinimumDonation = () => {
-    return !donation.value && otherDonationValue < minimumDonationAmount;
-  };
-
-  const validateMaximumDonation = () => {
-    return !donation.value && otherDonationValue > maximumDonationAmount;
-  };
-
-  const processDonation = async donation => {
-    // const checkoutSession = await fetchPostJSON(
-    //   "/api/checkout_sessions",
-    //   //storing the amount in the session or number ??
-    //   { amount: donation }
-    // );
-
-    // if (checkoutSession.statusCode === 500) {
-    //   console.error(checkoutSession.message);
-
-    //   return;
-    // }
-
-    // Redirect to Checkout.
-    //was await !!!
-    // const stripe = getStripe();
-
-    // const { error } = await stripe.redirectToCheckout({
-    //   sessionId: checkoutSession.id,
-    // });
-
-    // console.warn(error.message);
-
-    resetState();
-
-    // setShowModal({
-    //   isVisible: true,
-    //   status: "success",
-    //   message: modalMessages.success,
-    // });
-  };
-
-  const resetState = () => {
-    setOtherDonationValue("");
-    setDonation({ value: null, isActive: false });
-  };
-
-  const showModalError = message => {
-    setShowModal({
-      isVisible: true,
-      status: "error",
-      message,
-    });
-  };
-
-  const handleDonationSubmit = event => {
-    event.preventDefault();
-
-    switch (true) {
-      case validateDonation():
-        showModalError(modalMessages.invalidAmount);
-        return;
-
-      case validateMinimumDonation():
-        showModalError(modalMessages.minimumDonation);
-        return;
-
-      case validateMaximumDonation():
-        showModalError(modalMessages.maximumDonation);
-        return;
-
-      default:
-        processDonation(donation.value || otherDonationValue);
+      const { url } = await response.json();
+      router.push(url);
+      setIsRedirectingToStripe(false);
+    } catch (error) {
+      console.error("Error during API call:", error.message);
+      setRedirectError(error.message);
+      setIsRedirectingToStripe(false);
     }
   };
-
-  const { amountToSpend, icon } = donationData[donation.value] || defaultSpendingInfo;
 
   return (
     <div
@@ -175,26 +95,60 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
         </button>
       </div>
 
-      <form onSubmit={handleDonationSubmit}>
-        <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 gap-2">
-          {donateBoxValues.map(tile => {
-            return (
-              <DonateTile
-                key={tile.id}
-                onSetDonationValue={setDonation}
-                onSetOtherDonationValue={setOtherDonationValue}
-                isTileActive={tile.value === donation.value}
-                value={tile.value}
-              />
-            );
-          })}
-        </div>
+      <form onSubmit={handleSubmit}>
+        {loading || isRedirectingToStripe ? (
+          <div className="w-full h-[160px] flex justify-center items-center my-12">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 gap-2">
+              {data?.map(product => {
+                const donationValue = calcProductPrice(product.unit_amount);
+                return (
+                  <DonateTile
+                    key={product.id}
+                    productId={product.id}
+                    value={donationValue}
+                    onSetDonationId={setDonationId}
+                    onSetDonation={setDonation}
+                    isTileActive={donationValue === donation.value}
+                  />
+                );
+              })}
+            </div>
+          </>
+        )}
 
         <div className="sm:w-1/2 lg:w-full h-24 text-lg font-bold my-4 p-2 flex gap-4 justify-between items-center text-center mx-auto">
           <Image src={icon} alt={icon} width={50} height={50} />
           {amountToSpend}
         </div>
-        <div className="flex flex-col justify-center items-center gap-2">
+
+        <button
+          disabled={isDisabled}
+          className="block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-disabled-clr mb-4 disabled:cursor-not-allowed disabled:border-disabled-clr disabled:text-white"
+          type="submit">
+          Donate
+        </button>
+      </form>
+
+      {/* <Overlay showModal={error || redirectError} onRequestClose={setShowModal}>
+        <Modal
+          key={showModal.message}
+          showModal={error || redirectError}
+          onRequestClose={setShowModal}
+          status={showModal.status}
+          >
+          {error.message || redirectError.message}
+        </Modal>
+      </Overlay> */}
+    </div>
+  );
+}
+
+{
+  /* <div className="flex flex-col justify-center items-center gap-2">
           <label className="sr-only" htmlFor="other-amount">
             Other amount
           </label>
@@ -211,28 +165,5 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
           <small className="text-secondary-clr">
             Due to ..... a minimum donation amount is £10
           </small>
-        </div>
-
-        <button
-          disabled={isDisabled}
-          className="block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-disabled-clr mb-4 disabled:cursor-not-allowed disabled:border-disabled-clr disabled:text-white"
-          type="submit">
-          Donate
-        </button>
-      </form>
-
-      <Overlay showModal={showModal.isVisible} onRequestClose={setShowModal}>
-        <Modal
-          key={showModal.message}
-          showModal={showModal.isVisible}
-          onRequestClose={setShowModal}
-          status={showModal.status}
-          setCounter={setCounter}
-          countdown={counter}>
-          {/* Thanks for donating, you will be redirect to payment page in ...(env var) */}
-          {showModal.message}
-        </Modal>
-      </Overlay>
-    </div>
-  );
+        </div> */
 }

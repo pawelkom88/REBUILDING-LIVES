@@ -16,7 +16,7 @@ export default function Navigation() {
   const { buttonProps, itemProps, isOpen } = useDropdownMenu(2);
 
   return (
-    <header className="lg:h-[80px] flex justify-center items-center z-50 w-full bg-white text-md lg:py-3 py-1 md:py-0">
+    <header className="lg:h-[80px] flex justify-center items-center z-50 w-full bg-white text-md lg:py-3 py-1 md:py-0 shadow-lg">
       <nav className="max-w-[85rem] w-full mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <Image className="mt-2 lg:my-0" src={logo} width={50} height={40} alt="RBLUK logo" />
