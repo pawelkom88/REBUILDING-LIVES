@@ -40,6 +40,8 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
     }
   }, [donation.value]);
 
+  // move to HOOK
+
   const handleSubmit = async e => {
     e.preventDefault();
     setRedirectError(null);
