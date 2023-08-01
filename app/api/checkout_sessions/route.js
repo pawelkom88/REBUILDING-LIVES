@@ -15,8 +15,8 @@ export async function POST(request) {
 
     mode: "payment",
 
-    success_url: `${request.header.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${request.header.origin}/cancel`,
+    success_url: `https://rebuildinglives.netlify.app/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `https://rebuildinglives.netlify.app/cancel`,
   });
 
   return NextResponse.json(session);

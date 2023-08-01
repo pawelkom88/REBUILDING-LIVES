@@ -135,12 +135,12 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
         </button>
       </form>
 
-      {/* <Overlay showModal={error || redirectError} onRequestClose={setShowModal}>
+      {/* <Overlay showModal={error || redirectError} >
         <Modal
-          key={showModal.message}
+          // key={showModal.message}
           showModal={error || redirectError}
-          onRequestClose={setShowModal}
-          status={showModal.status}
+          
+    
           >
           {error.message || redirectError.message}
         </Modal>
