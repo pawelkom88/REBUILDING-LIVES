@@ -1,8 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import Naima from "@/public/images/team/Naima.jpg";
+import Naima from "@/public/images/team/Naima.webp";
 import Steve from "@/public/images/team/Steve2.jpg";
 import Nikita from "@/public/images/team/Nikita.jpg";
+import Lovina from "@/public/images/team/lovina.-crop.jpg";
+import Abdul from "@/public/images/team/Abdul.png";
 import Lindsey from "@/public/images/team/Lindsey-1800x2048.jpg";
 import Link from "next/link";
 
@@ -77,6 +79,34 @@ const peopleData: Person[] = [
         "Lindsey has worked in the third sector for 26 years. In the last 20 years she has been collaborating with the P3 Charity in varied roles. Currently, Lindsey is managing accommodation-based services in the Northwest region and Stoke-on-Trent for young people and adults experiencing accommodation challenges and having nowhere to call home. In addition, she is the leader of a core department that supports the charity’s strategy and delivery around involvement and engagement and is responsible for P3’s national programme for volunteers. Lindsey also promotes collaboration and coproduction and is passionate about people with lived experience shaping service delivery.",
     },
     image: Lindsey,
+  },
+  {
+    id: 5,
+    name: "Abdul Mozzamdar",
+    role: "",
+    bio: {
+      paragraph1:
+        "Abdul has been championing Social Mobility and Early Careers for 20 years. In the past, he has held senior positions at CITB, Kier Group and run his own consultancy business for 2 years, advising clients on Social Mobility, Early Careers, Strategy and Operational delivery and ED&I.",
+      paragraph2:
+        "Abdul’s most recent position as Group Social Value Director at PSR Group has seen him take his knowledge and experiences into a whole new arena of ‘purpose driven’ recruitment, to fill the ever-growing skills gaps here, in the UK. In 2019, PSR Group launched Build a Career, which Abdul is currently managing. Build a Career exists to support those who are most vulnerable and / or on the fringes of society, so that they get into sustainable employment.",
+      paragraph3:
+        "So, why does Abdul do what he does? His own words speak volumes: “I will fight injustice and inequality wherever I see it. I want to give the voiceless a platform and opportunities to live a happy and fulfilled life, ultimately their best life. I want to give them hope. The best feeling in the world is putting a smile on somebody else’s face. Knowing that my efforts could bring some light in somebody’s darkest hour fills me with immense joy”.",
+    },
+    image: Abdul,
+  },
+  {
+    id: 6,
+    name: "Lovina Raymond",
+    role: "",
+    bio: {
+      paragraph1:
+        "Lovina has worked as a communications expert in the private sector for over a decade and is currently working as a communications lead for the Group Technology division at Barclays. She has also worked for other multinational corporates including Bosch and SKF in the past.",
+      paragraph2:
+        "Having personal experience of domestic abuse, Lovina believes that protecting survivors of domestic violence is a matter of public safety and social justice. It is our collective responsibility to ensure that everybody can live in an environment where they feel safe, whilst also providing the holistic support for survivors of domestic violence to thrive.",
+      paragraph3:
+        "This is what encouraged her to serve as a trustee and she hopes to leverage her lived experience and professional skills to help further the goals of Rebuilding Lives UK.",
+    },
+    image: Lovina,
   },
 ];
 

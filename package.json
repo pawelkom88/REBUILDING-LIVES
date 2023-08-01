@@ -21,6 +21,7 @@
     "react-accessible-dropdown-menu-hook": "^4.0.0",
     "react-dom": "18.2.0",
     "react-focus-lock": "^2.9.5",
+    "sharp": "^0.32.4",
     "stripe": "^12.16.0",
     "typescript": "5.1.3"
   },

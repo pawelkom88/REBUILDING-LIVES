@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="bg-white mt-12">
-      <div className="bg-indigo-800 py-6">
+      <div className="bg-secondary-clr py-6">
         <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
           <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
             <div className="mb-3 text-center md:mb-0 md:text-left">
@@ -13,9 +13,9 @@ export default function Footer() {
             <form className="flex w-full gap-2 md:max-w-md">
               <input
                 placeholder="Email"
-                className="w-full flex-1 rounded border border-white bg-indigo-400 px-3 py-2 text-white placeholder-indigo-100 outline-none ring-indigo-300 transition duration-100 focus:ring"
+                className="w-full flex-1 rounded border border-white px-3 py-2 text-white placeholder-indigo-100 outline-none transition duration-100 focus:ring"
               />
-              <button className="inline-block rounded bg-white px-8 py-2 text-center text-sm font-semibold text-indigo-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:text-indigo-600 md:text-base">
+              <button className="inline-block rounded bg-white px-8 py-2 text-center text-sm font-semibold outline-none transition duration-100 hover:bg-gray-100 focus-visible:ring  md:text-base">
                 Send
               </button>
             </form>
@@ -27,12 +27,11 @@ export default function Footer() {
           <div className="mb-16 grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-6 lg:gap-8">
             <div className="col-span-full lg:col-span-2">
               {/* logo - start */}
-              <div className="mb-4 lg:-mt-2">
-                LOGO HERE
-              </div>
+              <div className="mb-4 lg:-mt-2">LOGO HERE</div>
               {/* logo - end */}
               <p className="mb-6 text-gray-500 sm:pr-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia animi dolorum incidunt sunt impedit repellendus est praesentium in voluptatibus aperiam?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia animi dolorum
+                incidunt sunt impedit repellendus est praesentium in voluptatibus aperiam?
               </p>
               {/* social - start */}
               <div className="flex gap-4">
@@ -100,30 +99,22 @@ export default function Footer() {
               <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">Products</div>
               <nav className="flex flex-col gap-4">
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Overview
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Solutions
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Pricing
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Customers
                   </a>
                 </div>
@@ -135,37 +126,27 @@ export default function Footer() {
               <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">Company</div>
               <nav className="flex flex-col gap-4">
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     About
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Investor Relations
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Jobs
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Press
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Blog
                   </a>
                 </div>
@@ -177,30 +158,22 @@ export default function Footer() {
               <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">Support</div>
               <nav className="flex flex-col gap-4">
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Contact
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Documentation
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Chat
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     FAQ
                   </a>
                 </div>
@@ -212,23 +185,17 @@ export default function Footer() {
               <div className="mb-4 font-bold uppercase tracking-widest text-gray-800">Legal</div>
               <nav className="flex flex-col gap-4">
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Terms of Service
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Privacy Policy
                   </a>
                 </div>
                 <div>
-                  <a
-                    href="#"
-                    className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">
+                  <a href="#" className="text-gray-500 transition duration-100  ">
                     Cookie settings
                   </a>
                 </div>

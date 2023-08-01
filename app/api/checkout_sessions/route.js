@@ -15,10 +15,8 @@ export async function POST(request) {
 
     mode: "payment",
 
-    // change !!! check proccess and yt
-    // request.header.origin - add env to netlify
-    success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:3000/cancel`,
+    success_url: `${request.header.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${request.header.origin}/cancel`,
   });
 
   return NextResponse.json(session);
