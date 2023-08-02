@@ -22,26 +22,40 @@ interface Person {
   image: any; // change
 }
 
-const ceo = {
-  id: 1,
-  name: "Naima Ben-Moussa",
-  role: "Founder and CEO",
-  bio: {
-    paragraph1:
-      "Naima is a survivor-turned-advocate who has dedicated her life to supporting domestic abuse survivors. Growing up, Naima witnessed her mother endure physical abuse and suffered abuse herself at the hands of her mother’s husbands. These experiences resulted in Naima and her siblings being placed in foster care. As a teenager, she faced further trauma, including sexual abuse and rape. The emotional pain led her to self-medicate with drugs and attempt suicide three times.",
-    paragraph2:
-      "Despite her traumatic past, Naima found the strength to persevere and transform her personal suffering into purposeful social action. As a trained plasterer, she began offering practical assistance to domestic abuse survivors, such as painting, plastering and home repairs, in an effort to create safe environments for them and their children. Through Rebuilding Lives UK Naima continues to support survivors in their journey to reclaim their lives, address post-abuse vulnerabilities, set new goals, and, ultimately, thrive.",
-    paragraph3:
-      "Naima’s work with Rebuilding Lives UK has been recognized in numerous media appearances, including BBC Radio 2 ‘s Jeremy Vine show, BBC Northampton, BBC Derby, Radio Derbyshire, Steph’s Packed Lunch (Channel 4), and the Russell Howard TV Show. She has received several awards, including the Trade Hero Award, Plasterer of the Year, and a Special Recognition Award. Naima was also nominated for the Women of the Year Award.",
-  },
-  image: Naima,
-};
+// const ceo = {
+//   id: 1,
+//   name: "Naima Ben-Moussa",
+//   role: "Founder and CEO",
+//   bio: {
+//     paragraph1:
+//       "Naima is a survivor-turned-advocate who has dedicated her life to supporting domestic abuse survivors. Growing up, Naima witnessed her mother endure physical abuse and suffered abuse herself at the hands of her mother’s husbands. These experiences resulted in Naima and her siblings being placed in foster care. As a teenager, she faced further trauma, including sexual abuse and rape. The emotional pain led her to self-medicate with drugs and attempt suicide three times.",
+//     paragraph2:
+//       "Despite her traumatic past, Naima found the strength to persevere and transform her personal suffering into purposeful social action. As a trained plasterer, she began offering practical assistance to domestic abuse survivors, such as painting, plastering and home repairs, in an effort to create safe environments for them and their children. Through Rebuilding Lives UK Naima continues to support survivors in their journey to reclaim their lives, address post-abuse vulnerabilities, set new goals, and, ultimately, thrive.",
+//     paragraph3:
+//       "Naima’s work with Rebuilding Lives UK has been recognized in numerous media appearances, including BBC Radio 2 ‘s Jeremy Vine show, BBC Northampton, BBC Derby, Radio Derbyshire, Steph’s Packed Lunch (Channel 4), and the Russell Howard TV Show. She has received several awards, including the Trade Hero Award, Plasterer of the Year, and a Special Recognition Award. Naima was also nominated for the Women of the Year Award.",
+//   },
+//   image: Naima,
+// };
 
 const peopleData: Person[] = [
   {
+    id: 1,
+    name: "Naima Ben-Moussa",
+    role: "Founder and CEO",
+    bio: {
+      paragraph1:
+        "Naima is a survivor-turned-advocate who has dedicated her life to supporting domestic abuse survivors. Growing up, Naima witnessed her mother endure physical abuse and suffered abuse herself at the hands of her mother’s husbands. These experiences resulted in Naima and her siblings being placed in foster care. As a teenager, she faced further trauma, including sexual abuse and rape. The emotional pain led her to self-medicate with drugs and attempt suicide three times.",
+      paragraph2:
+        "Despite her traumatic past, Naima found the strength to persevere and transform her personal suffering into purposeful social action. As a trained plasterer, she began offering practical assistance to domestic abuse survivors, such as painting, plastering and home repairs, in an effort to create safe environments for them and their children. Through Rebuilding Lives UK Naima continues to support survivors in their journey to reclaim their lives, address post-abuse vulnerabilities, set new goals, and, ultimately, thrive.",
+      paragraph3:
+        "Naima’s work with Rebuilding Lives UK has been recognized in numerous media appearances, including BBC Radio 2 ‘s Jeremy Vine show, BBC Northampton, BBC Derby, Radio Derbyshire, Steph’s Packed Lunch (Channel 4), and the Russell Howard TV Show. She has received several awards, including the Trade Hero Award, Plasterer of the Year, and a Special Recognition Award. Naima was also nominated for the Women of the Year Award.",
+    },
+    image: Naima,
+  },
+  {
     id: 2,
     name: "Steve McKenna",
-    role: "",
+    role: "Trustee",
     bio: {
       paragraph1:
         "Trained by BBC News, Steve McKenna is an award-winning journalist and broadcaster who was part of the team that marketed the Spice Girls. His life and professional experiences are daring and diverse.",
@@ -55,7 +69,7 @@ const peopleData: Person[] = [
   {
     id: 3,
     name: "Nikita Mckee",
-    role: "",
+    role: "Trustee",
     bio: {
       paragraph1:
         "Nikita has many years of experience in the Health and Social Care field and extensive project management experience within the domestic abuse sector.",
@@ -69,7 +83,7 @@ const peopleData: Person[] = [
   {
     id: 4,
     name: "Lindsey Robinson",
-    role: "",
+    role: "Trustee",
     bio: {
       paragraph1:
         "Lindsey’s relationship with Rebuilding Lives UK started during lockdown. One day she was working from home and listening to the Jeremy Vine show on BBC Radio 2. Jeremy was interviewing the ‘Lady in Red’ plasterer. Naima was talking about her lived experience of domestic abuse and how having recently met other people with similar traumatic experiences motivated her to utilise her trade to rebuild their homes and help them start a new life.",
@@ -83,7 +97,7 @@ const peopleData: Person[] = [
   {
     id: 5,
     name: "Abdul Mozzamdar",
-    role: "",
+    role: "Trustee",
     bio: {
       paragraph1:
         "Abdul has been championing Social Mobility and Early Careers for 20 years. In the past, he has held senior positions at CITB, Kier Group and run his own consultancy business for 2 years, advising clients on Social Mobility, Early Careers, Strategy and Operational delivery and ED&I.",
@@ -97,7 +111,7 @@ const peopleData: Person[] = [
   {
     id: 6,
     name: "Lovina Raymond",
-    role: "",
+    role: "Trustee",
     bio: {
       paragraph1:
         "Lovina has worked as a communications expert in the private sector for over a decade and is currently working as a communications lead for the Group Technology division at Barclays. She has also worked for other multinational corporates including Bosch and SKF in the past.",
@@ -110,14 +124,18 @@ const peopleData: Person[] = [
   },
 ];
 
+{
+  /*     */
+}
+
 const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
   return (
     <li className="border shadow-md h-fit">
-      <div className="aspect-[3/2]">
+      <div className="w-full h-96 overflow-hidden">
         <Image
           width={image.width}
           height={image.height}
-          className="object-cover w-full h-full"
+          className="object-cover object-center w-full h-full"
           src={image.src}
           alt={name}
         />
@@ -125,7 +143,7 @@ const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
       <div className="p-4">
         <div className="flex flex-col items-start justify-between w-full gap-4 ">
           <h3 className="text-xl font-medium leading-6 mt-2">{name}</h3>
-          <p className="text-base text-gray-700">{role}</p>
+          <p className="text-base text-gray-700 mb-2">{role}</p>
         </div>
 
         <ul role="list" className="flex flex-col gap-4">
@@ -143,10 +161,7 @@ const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
 const PeopleSection: React.FC = () => {
   return (
     <section>
-      <div className="items-center w-full px-5 pt-12 pb-24 mx-auto md:px-12 lg:px-16 max-w-7xl">
-        <ul>
-          <PersonCard {...ceo} />
-        </ul>
+      <div className="items-center w-full px-5 mx-auto md:px-12 lg:px-16 max-w-7xl">
         <br />
         <ul
           role="list"

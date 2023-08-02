@@ -5,11 +5,8 @@ const OurTeam = () => {
   return (
     <>
       <div className="mt-24 mb-4 md:mx-auto sm:text-center">
-        <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider  uppercase rounded-full bg-teal-accent-400">
-          A Team of Visionaries
-        </p>
         <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight  sm:text-4xl md:mx-auto">
-          Meet Our Dedicated Trustees
+          Our Team
         </h2>
       </div>
       <PeopleSection />;
@@ -19,7 +16,8 @@ const OurTeam = () => {
 
 export default OurTeam;
 
-{/* <div className="text-center text-gray-500 dark:text-gray-400">
+{
+  /* <div className="text-center text-gray-500 dark:text-gray-400">
 <Image
   width={image.width}
   height={image.height}
@@ -35,4 +33,5 @@ export default OurTeam;
 <Link className="underline font-medium" href="/more">
   Read more
 </Link>
-</div> */}
+</div> */
+}
