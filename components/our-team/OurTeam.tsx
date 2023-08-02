@@ -8,6 +8,9 @@ import Abdul from "@/public/images/team/Abdul.png";
 import Lindsey from "@/public/images/team/Lindsey-1800x2048.jpg";
 import Link from "next/link";
 
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { client } from "@/contentful/contentful";
+
 interface Bio {
   paragraph1: string;
   paragraph2: string;
@@ -21,21 +24,6 @@ interface Person {
   bio: Bio;
   image: any; // change
 }
-
-// const ceo = {
-//   id: 1,
-//   name: "Naima Ben-Moussa",
-//   role: "Founder and CEO",
-//   bio: {
-//     paragraph1:
-//       "Naima is a survivor-turned-advocate who has dedicated her life to supporting domestic abuse survivors. Growing up, Naima witnessed her mother endure physical abuse and suffered abuse herself at the hands of her mother’s husbands. These experiences resulted in Naima and her siblings being placed in foster care. As a teenager, she faced further trauma, including sexual abuse and rape. The emotional pain led her to self-medicate with drugs and attempt suicide three times.",
-//     paragraph2:
-//       "Despite her traumatic past, Naima found the strength to persevere and transform her personal suffering into purposeful social action. As a trained plasterer, she began offering practical assistance to domestic abuse survivors, such as painting, plastering and home repairs, in an effort to create safe environments for them and their children. Through Rebuilding Lives UK Naima continues to support survivors in their journey to reclaim their lives, address post-abuse vulnerabilities, set new goals, and, ultimately, thrive.",
-//     paragraph3:
-//       "Naima’s work with Rebuilding Lives UK has been recognized in numerous media appearances, including BBC Radio 2 ‘s Jeremy Vine show, BBC Northampton, BBC Derby, Radio Derbyshire, Steph’s Packed Lunch (Channel 4), and the Russell Howard TV Show. She has received several awards, including the Trade Hero Award, Plasterer of the Year, and a Special Recognition Award. Naima was also nominated for the Women of the Year Award.",
-//   },
-//   image: Naima,
-// };
 
 const peopleData: Person[] = [
   {
@@ -124,14 +112,15 @@ const peopleData: Person[] = [
   },
 ];
 
-{
-  /*     */
-}
+// CONTENTFUL ID FOR OUR TEAM = sDguW7OD6m1aL6U1zDk5x
 
 const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
+  // const page = await client.getEntry(id)
+  // const { body, title, bannerImage } = page.fields
+
   return (
-    <li className="border shadow-md h-fit">
-      <div className="w-full h-96 overflow-hidden">
+    <li className="rounded-lg shadow-lg h-fit">
+      <div className="w-full h-96 overflow-hidden rounded-t-lg">
         <Image
           width={image.width}
           height={image.height}
@@ -142,8 +131,8 @@ const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
       </div>
       <div className="p-4">
         <div className="flex flex-col items-start justify-between w-full gap-4 ">
-          <h3 className="text-xl font-medium leading-6 mt-2">{name}</h3>
-          <p className="text-base text-gray-700 mb-2">{role}</p>
+          <h3 className="text-heading3 font-medium leading-6 mt-2">{name}</h3>
+          <p className="text-base text-secondary-clr mb-2">{role}</p>
         </div>
 
         <ul role="list" className="flex flex-col gap-4">
@@ -160,17 +149,15 @@ const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
 
 const PeopleSection: React.FC = () => {
   return (
-    <section>
-      <div className="items-center w-full px-5 mx-auto md:px-12 lg:px-16 max-w-7xl">
-        <br />
-        <ul
-          role="list"
-          className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-3 lg:gap-x-8">
-          {peopleData.map((person, index) => (
-            <PersonCard key={index} {...person} />
-          ))}
-        </ul>
-      </div>
+    <section className="items-center w-full px-5 mx-auto md:px-12 lg:px-16 max-w-7xl my-12">
+      <br />
+      <ul
+        role="list"
+        className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-3 lg:gap-x-8">
+        {peopleData.map((person, index) => (
+          <PersonCard key={index} {...person} />
+        ))}
+      </ul>
     </section>
   );
 };

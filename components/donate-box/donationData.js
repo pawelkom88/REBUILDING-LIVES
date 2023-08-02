@@ -29,15 +29,6 @@ export const donationData = {
   },
 };
 
-export const donateBoxValues = [
-  { id: 1, value: 25 },
-  { id: 2, value: 35 },
-  { id: 3, value: 50 },
-  { id: 4, value: 100 },
-  { id: 5, value: 150 },
-  { id: 6, value: 300 },
-  { id: 7, value: 350 },
-];
 
 export const defaultSpendingInfo = {
   amountToSpend: "' No one has ever become poor by giving. ' - Anne Frank",

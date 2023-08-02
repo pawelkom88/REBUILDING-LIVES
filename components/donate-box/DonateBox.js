@@ -9,11 +9,14 @@ import Overlay from "../modal/overlay/Overlay";
 import closeBtn from "@/public/icons/close.svg";
 import { calcProductPrice } from "@/helpers";
 import useFetch from "@/hooks/useFetch";
+import useDonationSubmit from "@/hooks/useDonationSubmit";
 import Spinner from "@/components/spinner/Spinner";
-import { useRouter } from "next/navigation";
+
+const submitBtnStyles =
+  "block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-disabled-clr mb-4 disabled:cursor-not-allowed disabled:border-disabled-clr disabled:text-white";
 
 export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBox }) {
-  const router = useRouter();
+  const { handleSubmit, isRedirectingToStripe, setDonationId } = useDonationSubmit();
 
   const [donation, setDonation] = useState({
     value: null,
@@ -21,12 +24,6 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const [redirectError, setRedirectError] = useState(null);
-
-  const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
-
-  const [donationId, setDonationId] = useState("");
 
   const { data, loading, error } = useFetch();
 
@@ -40,41 +37,6 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
     }
   }, [donation.value]);
 
-  // move to HOOK
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setRedirectError(null);
-
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    setIsRedirectingToStripe(true);
-
-    try {
-      const response = await fetch("/api/checkout_sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ donationId }),
-        signal,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch checkout session");
-      }
-
-      const { url } = await response.json();
-      router.push(url);
-      setIsRedirectingToStripe(false);
-    } catch (error) {
-      console.error("Error during API call:", error.message);
-      setRedirectError(error.message);
-      setIsRedirectingToStripe(false);
-    }
-  };
-
   return (
     <div
       className={`${styles} w-full h-full px-4 flex flex-col justify-center mx-auto rounded bg-white`}>
@@ -83,7 +45,7 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
           <Image src={closeBtn} width={25} height={25} alt="close button" />
         </button>
       )}
-      <h2 className="tracking-wide text-center text-2xl text-gray-900 font-black m-3 mb-4">
+      <h2 className="tracking-wide text-center text-heading2 font-black m-3 mb-4">
         Your donation would help
       </h2>
       <div className="flex justify-center items-center mb-4">
@@ -104,7 +66,7 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
           </div>
         ) : (
           <>
-            <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 gap-2">
+            <div className="text-xl grid place-items-center grid-cols-2 sm:grid-cols-3 gap-2">
               {data?.map(product => {
                 const donationValue = calcProductPrice(product.unit_amount);
                 return (
@@ -122,15 +84,12 @@ export default function DonateBox({ styles = "", showClosebtn, onCloseDonationBo
           </>
         )}
 
-        <div className="sm:w-1/2 lg:w-full h-24 text-lg font-bold my-4 p-2 flex gap-4 justify-between items-center text-center mx-auto">
+        <div className="sm:w-1/2 lg:w-full h-24 text-lg font-[600] my-4 p-2 flex gap-4 justify-between items-center text-center mx-auto">
           <Image src={icon} alt={icon} width={50} height={50} />
           {amountToSpend}
         </div>
 
-        <button
-          disabled={isDisabled}
-          className="block mx-auto mt-8 rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow-xl active:translate-y-2 transition-transform duration-200 active:text-primary sm:w-auto border-2 border-secondary-clr hover:bg-primary-clr hover:text-white hover:border-primary-clr disabled:bg-disabled-clr mb-4 disabled:cursor-not-allowed disabled:border-disabled-clr disabled:text-white"
-          type="submit">
+        <button disabled={isDisabled} className={submitBtnStyles} type="submit">
           Donate
         </button>
       </form>

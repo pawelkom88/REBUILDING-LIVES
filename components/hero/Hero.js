@@ -5,6 +5,10 @@ import { useState } from "react";
 import piggyBank from "@/public/icons/piggy-bank.svg";
 import chat from "@/public/icons/chat.svg";
 import Link from "next/link";
+import heroBg from "@/public/images/hero-bg.webp";
+
+const linkCommonStyles =
+  "block w-full rounded px-12 py-3 font-medium shadow focus:outline-dashed focus:ring focus:ring-white sm:w-auto";
 
 export default function Hero() {
   const [isPlaying, setIsPlaying] = useState(true);
@@ -46,20 +50,20 @@ export default function Hero() {
       ) : (
         <Image
           className="absolute inset-0 object-cover w-full h-full fade-in-on-mount"
-          width={1920}
-          height={1080}
-          src="/images/111.jpg"
+          width={heroBg.width}
+          height={heroBg.height}
+          blurDataURL={heroBg.blurDataURL}
+          placeholder="blur"
+          src={heroBg}
           alt="hero-bg"
         />
       )}
 
       {/* components!!! */}
 
-      <div className="relative h-full z-20 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 flex items-center justify-between lg:px-8">
+      <div className="relative h-full z-20 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 flex items-center justify-between xl:px-8">
         <div className="max-w-xl">
-          <h1 className="text-3xl font-extrabold sm:text-5xl text-primary-clr">
-            Rebuilding Lives UK
-          </h1>
+          <h1 className="text-heading font-extrabold text-primary-clr">Rebuilding Lives UK</h1>
           <p className="mt-4 max-w-lg sm:text-xl/relaxed text-white">
             Rebuilding Lives UK empowers survivors of domestic abuse on the road to recovery by
             providing practical support including home maintainence, security and repair.
@@ -67,13 +71,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap gap-4 text-center">
             <Link
               href="#"
-              className="block w-full rounded bg-primary-clr px-12 py-3 text-sm font-medium text-white shadow hover:bg-white hover:text-primary-clr focus:outline-dashed focus:ring focus:ring-white active:bg-primary-clr sm:w-auto">
+              className={`bg-primary-clr text-white ${linkCommonStyles} hover:bg-white hover:text-primary-clr active:bg-primary-clr`}>
               Get Started
             </Link>
 
             <Link
               href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-primary-clr shadow hover:bg-primary-clr hover:text-white focus:outline-dashed focus:ring focus:ring-white active:text-primary-clr sm:w-auto">
+              className={`bg-white text-primary-clr ${linkCommonStyles} hover:bg-primary-clr hover:text-white active:text-primary-clr`}>
               Join the team
             </Link>
           </div>
@@ -85,7 +89,7 @@ export default function Hero() {
             styles={"fixed inset-0 z-40"}
           />
         )}
-        <div className="h-[600px] w-[450px] hidden xl:flex justify-center items-center">
+        <div className="h-[600px] w-[475px] hidden lg:flex justify-center items-center">
           <DonateBox />
         </div>
       </div>

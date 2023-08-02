@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/public/images/logo-rebulding-lives.webp";
+import logo from "@/public/images/logo.webp";
 import FAQ from "./FAQ";
 
 const menuItems = [
