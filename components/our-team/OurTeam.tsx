@@ -3,7 +3,7 @@ import React from "react";
 import Naima from "@/public/images/team/Naima.webp";
 import Steve from "@/public/images/team/Steve2.jpg";
 import Nikita from "@/public/images/team/Nikita.jpg";
-import Lovina from "@/public/images/team/lovina.-crop.jpg";
+import Lovina from "@/public/images/team/Lovina.webp";
 import Abdul from "@/public/images/team/Abdul.png";
 import Lindsey from "@/public/images/team/Lindsey-1800x2048.jpg";
 import Link from "next/link";
@@ -118,10 +118,13 @@ const PersonCard: React.FC<Person> = ({ name, role, image, bio }) => {
   // const page = await client.getEntry(id)
   // const { body, title, bannerImage } = page.fields
 
+  const objectFitValue = name === "Steve McKenna" ? "contain" : undefined;
+
   return (
     <li className="rounded-lg shadow-lg h-fit">
       <div className="w-full h-96 overflow-hidden rounded-t-lg">
         <Image
+          style={{ objectFit: objectFitValue }}
           width={image.width}
           height={image.height}
           className="object-cover object-center w-full h-full"
